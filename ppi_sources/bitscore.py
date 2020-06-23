@@ -78,10 +78,10 @@ class TricolBitscoreMatrix(BitscoreMatrix):
             net2_vs = self.net2.igraph.vs
 
             if self_by == 'index':
-                for p1_id, p2_id, score in self.dataframe:
+                for p1_id, p2_id, score in self.iter_tricol(self_by):
                     yield net1_vs[p1_id], net2_vs[p2_id], score
             else:
-                for p1_by, p2_by, score in self.dataframe:
+                for p1_by, p2_by, score in self.iter_tricol(self_by):
                     p1s = net1_vs.select(**{self_by:p1_by})
                     p2s = net2_vs.select(**{self_by:p2_by})
                     if len(p1s) > 0 and len(p2s) > 0:
