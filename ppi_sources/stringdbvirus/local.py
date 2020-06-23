@@ -34,7 +34,7 @@ class StringDBVirusLocalSource(Source):
             raise LookupError(f'network file for {network_name} was not found')
 
         edges_df = pd.read_csv(
-            path=species_path,
+            species_path,
             sep='\t',
             header=None,
             names=['source', 'target', 'score'],
@@ -55,9 +55,9 @@ class StringDBVirusLocalSource(Source):
     #     matrix_path2 = path.join(self.base_path, 'blast', f'{net1.host_id}-{net2.host_id}', f'{net2.virus_id}-{net1.virus_id}.bitscore.tsv')
 
     #     try:
-    #         return read_tricol_bitscores(matrix_path1, net1=net1, net2=net2, header=True)
+    #         return read_tricol_bitscores(matrix_path1, net1=net1, net2=net2, header=0)
     #     except:
-    #         return read_tricol_bitscores(matrix_path2, net1=net2, net2=net1, header=True).swapping_net1_net2()
+    #         return read_tricol_bitscores(matrix_path2, net1=net2, net2=net1, header=0).swapping_net1_net2()
 
 
     async def get_bitscore_matrix(self, net1, net2):
@@ -65,7 +65,7 @@ class StringDBVirusLocalSource(Source):
 
         matrix_path = path.join(self.base_path, 'similarity', f'{net1.virus_id}-{net2.virus_id}.tsv')
 
-        return read_tricol_bitscores(matrix_path, net1=net1, net2=net2, header=False)
+        return read_tricol_bitscores(matrix_path, net1=net1, net2=net2, header=None)
 
 
     async def get_ontology_mapping(self, networks=None):

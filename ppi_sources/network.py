@@ -120,6 +120,9 @@ def read_net_edgelist_tsv(name, *, net_path=None, string=None, header=False):
 
     return EdgeListNetwork(name, edges_df) if edges_df is not None else None
 
+def create_edgelist_from_edges(name, edges):
+    return EdgeListNetwork(name, pd.DataFrame(edges))
+
 
 class IgraphNetwork(Network):
     def __init__(self, name, graph, simplify=True):

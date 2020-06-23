@@ -2,7 +2,7 @@ from os import path
 import json
 
 from ppi_sources.bitscore import read_tricol_bitscores
-from ppi_sources.network import read_net_edgelist_tsv
+from ppi_sources.network import read_net_edgelist_tsv, create_edgelist_from_edges
 from ppi_sources.source import Source
 
 
@@ -24,12 +24,13 @@ class IsobaseLocalSource(Source):
 
         if not path.isfile(species_path):
             raise LookupError(f'network file for {species_name} was not found')
-
         return read_net_edgelist_tsv(species_name, net_path=species_path)
 
 
     async def build_custom_network(self, net_desc):
-        raise NotImplementedError()
+        species_name = net_desc['species_name']
+
+        return create_edgelist_from_edges(species_name, net_desc['edges'])
 
 
     async def get_bitscore_matrix(self, net1, net2):
@@ -49,7 +50,7 @@ class IsobaseLocalSource(Source):
             if not path.isfile(matrix_path):
                 raise LookupError(f'score matrix file for {net1.name}-{net2.name} was not found')
 
-        return read_tricol_bitscores(matrix_path, net1=net1, net2=net2)
+        return read_tricol_bitscores(matrix_path, net1=net1, net2=net2, header=None)
 
 
     async def get_ontology_mapping(self, networks=None):
