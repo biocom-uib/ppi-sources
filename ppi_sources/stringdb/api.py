@@ -41,7 +41,7 @@ class StringDBAPISource(Source):
     async def build_custom_network(self, net_desc):
         edges_array = np.array(net_desc['edges'], dtype=str)
 
-        vert_ids = np.unique(edge_array.flatten()).tolist()
+        vert_ids = np.unique(edges_array.flatten()).tolist()
 
         vert_data = await self.client.request_dataframe('POST', '/db/stringdb/items/proteins/select', json={
             'columns': ['protein_id', 'species_id', 'protein_external_id'],
