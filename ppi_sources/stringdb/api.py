@@ -40,7 +40,8 @@ class StringDBAPISource(Source):
 
 
     async def build_custom_network(self, net_desc):
-        edges_array = np.array(net_desc['edges'], dtype=str)
+        edges_array = net_desc['edges']
+        edges_array = np.array(edges_array, dtype=str).reshape(len(edges_array), 2)
 
         vert_ids = np.unique(edges_array.flatten()).tolist()
 
